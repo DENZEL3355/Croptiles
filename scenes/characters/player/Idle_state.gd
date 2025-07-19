@@ -33,7 +33,8 @@ func _on_next_transitions() -> void: # виртуальный метод для 
 	
 	if GameInputEvent.is_movement_input():
 		transition.emit("Walk")
-	pass
+	if player.current_tool == DataTypes.Tools.AxeWood && GameInputEvent.use_tool():
+		transition.emit("chopping")
 
 func _on_enter() -> void: # метод входа
 	pass

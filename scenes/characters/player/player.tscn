@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bin34h2aqud3j"]
+[gd_scene load_steps=50 format=3 uid="uid://bin34h2aqud3j"]
 
 [ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_1o44b"]
 [ext_resource type="Texture2D" uid="uid://c4yp1ouf1in48" path="res://assets/game/characters/basic_character_action.png" id="1_mwnrt"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/state_machine/node_state_maсhine.gd" id="3_cjygf"]
 [ext_resource type="Script" path="res://scenes/characters/player/Idle_state.gd" id="4_ol1n6"]
 [ext_resource type="Script" path="res://scenes/characters/player/walk_state.gd" id="5_5q23d"]
+[ext_resource type="Script" path="res://scenes/characters/player/chopping_state.gd" id="7_i5b3d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1m54w"]
 atlas = ExtResource("1_mwnrt")
@@ -176,7 +177,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6tv6a")
 }],
-"loop": true,
+"loop": false,
 "name": &"chopping_back",
 "speed": 3.0
 }, {
@@ -187,7 +188,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xwx3m")
 }],
-"loop": true,
+"loop": false,
 "name": &"chopping_front",
 "speed": 3.0
 }, {
@@ -198,7 +199,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8gskj")
 }],
-"loop": true,
+"loop": false,
 "name": &"chopping_left",
 "speed": 3.0
 }, {
@@ -209,7 +210,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q7w2o")
 }],
-"loop": true,
+"loop": false,
 "name": &"chopping_right",
 "speed": 3.0
 }, {
@@ -399,9 +400,8 @@ script = ExtResource("1_1o44b")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_bw0ev")
-animation = &"idle_left"
+animation = &"chopping_left"
 autoplay = "idle_front"
-frame_progress = 0.427414
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
@@ -418,5 +418,10 @@ animated_sprite_2d = NodePath("../../AnimatedSprite2D")
 
 [node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
 script = ExtResource("5_5q23d")
+player = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Chopping" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
+script = ExtResource("7_i5b3d")
 player = NodePath("../..")
 animated_sprite_2d = NodePath("../../AnimatedSprite2D")

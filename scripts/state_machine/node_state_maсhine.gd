@@ -24,7 +24,7 @@ func _physics_process(delta):
 	if current_node_state: # если текущее состояние есть, то 
 		current_node_state._on_physics_process(delta) # обробатываем физику состояния
 		current_node_state._on_next_transitions() # проверяем возможные переходы
-		#print("Current State: ", current_node_state_name) #  выводим в консоль текущее состояние
+		print("Current State: ", current_node_state) #  выводим в консоль текущее состояние
 
 func _process(delta): #вызывается каждый кадр
 	if current_node_state :# если есть  текущее состояние 
