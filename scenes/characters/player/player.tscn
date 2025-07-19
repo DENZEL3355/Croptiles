@@ -1,7 +1,11 @@
-[gd_scene load_steps=45 format=3 uid="uid://bin34h2aqud3j"]
+[gd_scene load_steps=49 format=3 uid="uid://bin34h2aqud3j"]
 
+[ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_1o44b"]
 [ext_resource type="Texture2D" uid="uid://c4yp1ouf1in48" path="res://assets/game/characters/basic_character_action.png" id="1_mwnrt"]
 [ext_resource type="Texture2D" uid="uid://dayjibomp24tk" path="res://assets/game/characters/basic_character_sprites.png" id="2_rsd34"]
+[ext_resource type="Script" path="res://scripts/state_machine/node_state_maсhine.gd" id="3_cjygf"]
+[ext_resource type="Script" path="res://scenes/characters/player/Idle_state.gd" id="4_ol1n6"]
+[ext_resource type="Script" path="res://scenes/characters/player/walk_state.gd" id="5_5q23d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1m54w"]
 atlas = ExtResource("1_mwnrt")
@@ -390,13 +394,29 @@ animations = [{
 radius = 8.0
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_1o44b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_bw0ev")
-animation = &"idle_front"
+animation = &"idle_left"
 autoplay = "idle_front"
+frame_progress = 0.427414
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_mig68")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("3_cjygf")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
+script = ExtResource("4_ol1n6")
+player = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
+script = ExtResource("5_5q23d")
+player = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
