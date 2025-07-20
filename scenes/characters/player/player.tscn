@@ -397,6 +397,7 @@ animations = [{
 radius = 8.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_1o44b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -406,7 +407,8 @@ animation = &"tilling_right"
 autoplay = "idle_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -7.78)
+scale = Vector2(0.535, 0.965)
 shape = SubResource("CircleShape2D_mig68")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
