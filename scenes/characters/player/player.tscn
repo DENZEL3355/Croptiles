@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bin34h2aqud3j"]
+[gd_scene load_steps=52 format=3 uid="uid://bin34h2aqud3j"]
 
 [ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_1o44b"]
 [ext_resource type="Texture2D" uid="uid://c4yp1ouf1in48" path="res://assets/game/characters/basic_character_action.png" id="1_mwnrt"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://scenes/characters/player/Idle_state.gd" id="4_ol1n6"]
 [ext_resource type="Script" path="res://scenes/characters/player/walk_state.gd" id="5_5q23d"]
 [ext_resource type="Script" path="res://scenes/characters/player/chopping_state.gd" id="7_i5b3d"]
+[ext_resource type="Script" path="res://scenes/characters/player/tilling_state.gd" id="8_fsb6v"]
+[ext_resource type="Script" path="res://scenes/characters/player/watering_state.gd" id="9_8woa4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1m54w"]
 atlas = ExtResource("1_mwnrt")
@@ -72,14 +74,6 @@ region = Rect2(0, 144, 48, 48)
 atlas = ExtResource("2_rsd34")
 region = Rect2(48, 144, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kw55b"]
-atlas = ExtResource("1_mwnrt")
-region = Rect2(0, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uk1jj"]
-atlas = ExtResource("1_mwnrt")
-region = Rect2(48, 144, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_dpmx1"]
 atlas = ExtResource("1_mwnrt")
 region = Rect2(0, 48, 48, 48)
@@ -103,6 +97,14 @@ region = Rect2(0, 96, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8dh7"]
 atlas = ExtResource("1_mwnrt")
 region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kw55b"]
+atlas = ExtResource("1_mwnrt")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk1jj"]
+atlas = ExtResource("1_mwnrt")
+region = Rect2(48, 144, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydthg"]
 atlas = ExtResource("2_rsd34")
@@ -260,23 +262,12 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kw55b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uk1jj")
-}],
-"loop": true,
-"name": &"tiilling_right",
-"speed": 3.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_dpmx1")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8m5ej")
 }],
-"loop": true,
+"loop": false,
 "name": &"tilling_back",
 "speed": 3.0
 }, {
@@ -287,7 +278,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_orkk4")
 }],
-"loop": true,
+"loop": false,
 "name": &"tilling_front",
 "speed": 3.0
 }, {
@@ -298,8 +289,19 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j8dh7")
 }],
-"loop": true,
+"loop": false,
 "name": &"tilling_left",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kw55b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uk1jj")
+}],
+"loop": false,
+"name": &"tilling_right",
 "speed": 3.0
 }, {
 "frames": [{
@@ -353,7 +355,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_au1re")
 }],
-"loop": true,
+"loop": false,
 "name": &"watering_back",
 "speed": 3.0
 }, {
@@ -364,7 +366,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dunln")
 }],
-"loop": true,
+"loop": false,
 "name": &"watering_front",
 "speed": 3.0
 }, {
@@ -375,7 +377,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xad53")
 }],
-"loop": true,
+"loop": false,
 "name": &"watering_left",
 "speed": 3.0
 }, {
@@ -386,7 +388,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2lma5")
 }],
-"loop": true,
+"loop": false,
 "name": &"watering_right",
 "speed": 3.0
 }]
@@ -400,7 +402,7 @@ script = ExtResource("1_1o44b")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_bw0ev")
-animation = &"chopping_left"
+animation = &"tilling_right"
 autoplay = "idle_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -423,5 +425,15 @@ animated_sprite_2d = NodePath("../../AnimatedSprite2D")
 
 [node name="Chopping" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
 script = ExtResource("7_i5b3d")
+player = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Tilling" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
+script = ExtResource("8_fsb6v")
+player = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Watering" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite_2d")]
+script = ExtResource("9_8woa4")
 player = NodePath("../..")
 animated_sprite_2d = NodePath("../../AnimatedSprite2D")
